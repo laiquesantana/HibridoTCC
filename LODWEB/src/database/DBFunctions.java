@@ -27,7 +27,9 @@ import org.apache.jena.rdf.model.impl.ResourceImpl;
 
 import cosinesimilarity.LuceneCosineSimilarity;
 import model.HitRate;
+import model.Movies;
 import model.OnlineEvaluation;
+import model.Ratings;
 import model.User;
 import node.Classifier;
 import node.Evaluation;
@@ -6486,7 +6488,136 @@ public class DBFunctions {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}		
+	}	
+	
+// ----------------------------- AQUI COMEÇA OS MÉTODOS UTILIZADOS NO TCC LAIQUE all rights reserved 2018 --------------------------------------- 
+	public ArrayList<Ratings> getFilmes(int i) {
+		Ratings rating = null;
+
+		ArrayList<Ratings> list = new ArrayList<Ratings>();
+		try {
+			Connection conn = DBConnection.getConnection();
+			String query = "SELECT * FROM tcclaique.ratings where `user_id`= ? and `rating` >  4";
+			// NodeUtil.print(query);
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, i);
+			ResultSet rs = ps.executeQuery();
+			while (rs != null && rs.next()) {
+				rating = new Ratings(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4));
+				list.add(rating);
+			}
+			closeQuery(conn, ps);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return list;
+	}
+
+	public ArrayList<Movies> getDescription(int id) {
+		Movies movie = null;
+		ArrayList<Movies> list = new ArrayList<Movies>();
+		try {
+			Connection conn = DBConnection.getConnection();
+			String query = "SELECT * FROM tcclaique.Movies where `id`= ? ";
+			// NodeUtil.print(query);
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			while (rs != null && rs.next()) {
+				movie = new Movies(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+				list.add(movie);
+			}
+			closeQuery(conn, ps);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return list;
+	}
+
+	public ArrayList<Movies> getFilmesNaoAvaliados(int id) {
+
+		ArrayList<Movies> list = new ArrayList<Movies>();
+		try {
+			Connection conn = DBConnection.getConnection();
+			String query = "SELECT * FROM tcclaique.Movies where `id` not in(SELECT `movie_id` FROM tcclaique.ratings where `user_id` = ?)  and tcclaique.movies.description is not null";
+			// NodeUtil.print(query);
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			while (rs != null && rs.next()) {
+				Movies movie = new Movies(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
+						rs.getString(5));
+				list.add(movie);
+			}
+			closeQuery(conn, ps);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return list;
+	}
+
+	public void insertOrUpdateSimilarity(int user_id, int movie_id_1, int movie_id_2, float similarity) {
+		Connection conn = DBConnection.getConnection();
+		PreparedStatement ps = null;
+		try {
+			try {
+				// for (Evaluation evaluation : evaluations) {
+				String query = "REPLACE INTO `tcclaique`.`similarity` (`user_id`,`movie_id_1`,`movie_id_2`,`similarity`) VALUES (?,?,?,?)";
+				// System.out.println(query);
+				ps = conn.prepareStatement(query);
+				ps.setInt(1, user_id);
+				ps.setInt(2, movie_id_1);
+				ps.setInt(3, movie_id_2);
+				ps.setFloat(4, similarity);
+
+				ps.execute();
+				// }
+				ps.close();
+				conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+	}
+	
+	public int getQtdAllUsers() {
+
+		int i = 0;
+		try {
+			Connection conn = DBConnection.getConnection();
+			String query = "SELECT * FROM tcclaique.users";
+			//NodeUtil.print(query);
+			PreparedStatement ps = conn.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			while (rs != null && rs.next()) {
+				i++;
+			}
+			closeQuery(conn, ps);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return i;
+	}
+	
+	
+// --------------------------------------------------- FIM DOS CODIGOS TCC LAIQUE all rights reserved ------------------------------------------	
 	    
 	/**
 	 * @throws Exception

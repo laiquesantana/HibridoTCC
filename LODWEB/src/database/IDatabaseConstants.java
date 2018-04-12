@@ -35,12 +35,12 @@ public abstract class IDatabaseConstants {
 	/**
 	 * 
 	 */
-	public static String DB_IP_ADDRESS = "localhost";
-	//public static String DB_IP_ADDRESS = "127.0.0.1";
+	//public static String DB_IP_ADDRESS = "localhost";
+	public static String DB_IP_ADDRESS = "127.0.0.1";
 	/**
 	 * 
 	 */
-	public static String DB_SCHEMA = "lod";
+	public static String DB_SCHEMA = "tcclaique";
 
 	/**
 	 * 
@@ -51,7 +51,7 @@ public abstract class IDatabaseConstants {
 	/**
 	 * 
 	 */
-	public static String DB_PASSWORD = "lodica";
+	public static String DB_PASSWORD = "root";
 	//public String DB_PASSWORD = "BHU*nji9";
 	//public static String DB_PASSWORD = "durao";
 

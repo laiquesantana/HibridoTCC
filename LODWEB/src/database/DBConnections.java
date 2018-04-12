@@ -22,7 +22,7 @@ public enum DBConnections {
 		}
 		@Override
 		public String getDbSchema() {
-			return "lod";
+			return "tcclaique";
 		}
 		
 		@Override
