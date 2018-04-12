@@ -1,6 +1,7 @@
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\similarity\VSM.java
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\tfidf\CosineSimilarity.java
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\node\Item.java
+D:\Users\Laique\git\HibridoTCC\LODWEB\src\model\Movies.java
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\node\Sparql.java
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\node\Evaluation.java
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\node\IConstants.java
@@ -11,6 +12,7 @@ D:\Users\Laique\git\HibridoTCC\LODWEB\src\cosinesimilarity\FF.java
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\lodweb\LodRest.java
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\lodweb\ValidationView.java
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\metric\AUC.java
+D:\Users\Laique\git\HibridoTCC\LODWEB\src\model\Users.java
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\metric\MRR.java
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\tfidf\TfIdf.java
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\parser\Parser.java
@@ -41,6 +43,7 @@ D:\Users\Laique\git\HibridoTCC\LODWEB\src\lodweb\ResourceView.java
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\util\Sorter.java
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\lucene\Configuration.java
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\metric\NDCGString.java
+D:\Users\Laique\git\HibridoTCC\LODWEB\src\tcc\PrincipalTcc.java
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\lucene\AllTerms.java
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\node\Classifier.java
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\database\DBConnections.java
@@ -59,6 +62,7 @@ D:\Users\Laique\git\HibridoTCC\LODWEB\src\node\NodePrediction.java
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\tfidf\TfIdfMain.java
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\model\OnlineEvaluation.java
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\database\IDatabaseConstants.java
+D:\Users\Laique\git\HibridoTCC\LODWEB\src\model\Ratings.java
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\node\SparqlWalk.java
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\knn\DataInstance.java
 D:\Users\Laique\git\HibridoTCC\LODWEB\src\knn\DataProviderIris.java

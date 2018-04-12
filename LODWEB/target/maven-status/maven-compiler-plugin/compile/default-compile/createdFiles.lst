@@ -2,9 +2,11 @@ cosinesimilarity\VectorGenerator.class
 knn\DataTransfer.class
 metric\ReciprocalRank.class
 node\Classifier.class
+tcc\PrincipalTcc.class
 cosinesimilarity\FF.class
 util\Sorter$1.class
 cosinesimilarity\DocVector.class
+model\Users.class
 util\Sorter.class
 node\SemSim.class
 node\ThreadLod.class
@@ -80,6 +82,7 @@ tfidf\CosineSimilarity.class
 knn\DataProviderIris.class
 database\DBFunctions.class
 lucene\Configuration.class
+model\Movies.class
 node\GraphView$TextColorAction.class
 database\IDatabaseConstants.class
 node\IConstants.class
@@ -98,3 +101,4 @@ node\GraphView$3.class
 node\DateUtil$1.class
 cosinesimilarity\CosineSimilarity.class
 database\DBConnection.class
+model\Ratings.class

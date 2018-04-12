@@ -50,7 +50,9 @@ public class PrincipalTcc {
 		DBFunctions dbFunctions = new DBFunctions();
 		dbFunctions.analyseOnlineEvaluationByUser(IConstants.LDSD_LOD);
 
-		for (int j = 1; j < 2; j++) {
+		int quantidadeUsuario= dbFunctions.getQtdAllUsers();
+		System.out.println(quantidadeUsuario);
+		for (int j = 1; j < quantidadeUsuario; j++) {
 			DBFunctions teste = new DBFunctions();
 
 			List<Ratings> lista = new ArrayList<Ratings>();
