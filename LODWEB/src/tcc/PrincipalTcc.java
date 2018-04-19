@@ -54,7 +54,7 @@ public class PrincipalTcc {
 
 		int quantidadeUsuario = dbFunctions.getQtdAllUsers();
 		System.out.println(quantidadeUsuario);
-		for (int j = 1; j < 100; j++) {
+		for (int j = 1; j < quantidadeUsuario; j++) {
 			DBFunctions teste = new DBFunctions();
 
 			List<Ratings> lista = new ArrayList<Ratings>();
@@ -81,82 +81,89 @@ public class PrincipalTcc {
 
 			// para cada filme avaliado retorna em listaMovies o objeto Movies
 			// com descrição , titulo etc...
+			String string1 = "";
 			for (Ratings obj : listaDeFilme) {
 				ArrayList<Movies> filme = teste.getDescription(obj.getMovie_id());
 				listaMovies.addAll(filme);
+
 				// System.out.println ( "id do filme: " +obj.getMovie_id() + ":
 				// nota: " + obj.getRating() );
 			}
+
+			for (Movies obj : listaMovies) {
+				// System.out.println( obj.getDescription());
+				string1 = string1 + obj.getDescription();
+				// System.out.println(descricao);
+			}
+
 			System.out.println("SIMILARIDADE DE FILMES PARA O USUARIO " + j + " ----------------");
 			System.out.println(
 					"----------------------------- similaridade coseno do filmes avaliados com os filmes não avaliado --------");
 
-			for (Movies obj : listaMovies) {
-				for (int i = 0; i < listaDeFilmesNaoAvaliados.size(); i++) {
-					// ArrayList<Movies> listaMovies =
-					// teste.getDescription(obj.getMovie_id());
-					// System.out.println ( " \ntitulo => " + obj.getTitle()+
-					String string1 = obj.getDescription();
-					String string2 = listaDeFilmesNaoAvaliados.get(i).getDescription();
+			// for (Movies obj : listaMovies) {
+			for (int i = 0; i < listaDeFilmesNaoAvaliados.size(); i++) {
+				// ArrayList<Movies> listaMovies =
+				// teste.getDescription(obj.getMovie_id());
+				// System.out.println ( " \ntitulo => " + obj.getTitle()+
+				// String string1 = obj.getDescription();
+				String string2 = listaDeFilmesNaoAvaliados.get(i).getDescription();
 
-					float result1 = (float) LuceneCosineSimilarity.getCosineSimilarity(string1, string2);
-					if (result1 > 0.2) {
-						System.out.println("Calculo sem RETIRAR caractere especiais");
-						System.out.println(result1);
-						System.out.println("------------------------------------------");
-					}
+				float result1 = (float) LuceneCosineSimilarity.getCosineSimilarity(string1, string2);
+				if (result1 > 0.2) {
+					System.out.println("Calculo sem RETIRAR caractere especiais");
+					System.out.println(result1);
+					System.out.println("------------------------------------------");
+				}
 
-				
-					float result2 = (float) LuceneCosineSimilarity.getCosineSimilarity(removeSpecialCharacters(string1),
-							string2);
-					if (result2 > 0.2) {
-						System.out.println("UTILIZANDO FUNÇÃO removeSpecialCharacters() - Laique");
-						System.out.println(result2);
-						System.out.println("------------------------------------------");
-					}
-				
+				float result2 = (float) LuceneCosineSimilarity.getCosineSimilarity(removeSpecialCharacters(string1),
+						string2);
+				if (result2 > 0.2) {
+					System.out.println("UTILIZANDO FUNÇÃO removeSpecialCharacters() - Laique");
+					System.out.println(result2);
+					System.out.println("------------------------------------------");
+				}
 
-				
-					float result3 = (float) LuceneCosineSimilarity
-							.getCosineSimilarity(StringUtilsNode.removeInvalidCharacteres(string1), string2);
-					if (result3 > 0.2) {
-						System.out.println("UTILIZANDO FUNÇÃO removeInvalidCharacteres() - LODWEB");
-						System.out.println(result3);
-						System.out.println("------------------------------------------");
-					}
-				
+				float result3 = (float) LuceneCosineSimilarity
+						.getCosineSimilarity(StringUtilsNode.removeInvalidCharacteres(string1), string2);
+				if (result3 > 0.2) {
+					System.out.println("UTILIZANDO FUNÇÃO removeInvalidCharacteres() - LODWEB");
+					System.out.println(result3);
+					System.out.println("------------------------------------------");
+				}
 
-					
-					float result4 = (float) LuceneCosineSimilarity.getCosineSimilarity(
-							StringUtilsNode.removeInvalidCharacteres(removeWords(string1)), removeWords(string2));
-					if (result4 > 0.2) {
-						System.out.println("UTILIZANDO FUNÇÃO removeWords() - laique");
-						System.out.println(result4);
-						System.out.println("------------------------------------------");
-						System.out.println("o filme \n\n" + obj.getTitle() + "com o filme \n"
-								+ listaDeFilmesNaoAvaliados.get(i).getTitle() + " possui similaridade:\n "
-								+ (result4 * 100));
-						teste.insertOrUpdateSimilarity(j, obj.getId(), listaDeFilmesNaoAvaliados.get(i).getId(),
-								result4);
-					}
-			
-
-					/*Float Resultado = (float) LuceneCosineSimilarity.getCosineSimilarity(string1, string2);
-					if (Resultado > 0.2) {
-						System.out.println("o filme \n\n" + obj.getTitle() + "com o filme \n"
-								+ listaDeFilmesNaoAvaliados.get(i).getTitle() + " possui similaridade:\n "
-								+ (Resultado * 100));
-						teste.insertOrUpdateSimilarity(j, obj.getId(), listaDeFilmesNaoAvaliados.get(i).getId(),
-								Resultado);
-					}*/
+				float result4 = (float) LuceneCosineSimilarity.getCosineSimilarity(
+						StringUtilsNode.removeInvalidCharacteres(removeWords(string1)), removeWords(string2));
+				if (result4 > 0.2) {
+					System.out.println("UTILIZANDO FUNÇÃO removeWords() - laique");
+					System.out.println(result4);
+					System.out.println("------------------------------------------");
+					System.out.println("o filme \n\n" + "com o filme \n" + listaDeFilmesNaoAvaliados.get(i).getTitle()
+							+ " possui similaridade:\n " + (result4 * 100));
 
 				}
+				float maiorvalor = bublueSort(result1, result2, result3, result4);
+				if (maiorvalor > 0.2) {
+					teste.insertOrUpdateSimilarity(j, listaDeFilmesNaoAvaliados.get(i).getTitle(),
+							listaDeFilmesNaoAvaliados.get(i).getId(), maiorvalor);
+				}
+
+				/*
+				 * Float Resultado = (float)
+				 * LuceneCosineSimilarity.getCosineSimilarity(string1, string2);
+				 * if (Resultado > 0.2) { System.out.println("o filme \n\n" +
+				 * obj.getTitle() + "com o filme \n" +
+				 * listaDeFilmesNaoAvaliados.get(i).getTitle() +
+				 * " possui similaridade:\n " + (Resultado * 100));
+				 * teste.insertOrUpdateSimilarity(j, obj.getId(),
+				 * listaDeFilmesNaoAvaliados.get(i).getId(), Resultado); }
+				 */
 
 			}
 
-			System.out.println(
-					"-----------------------------------------------------------------------------------------------------------------------");
 		}
+
+		System.out.println(
+				"-----------------------------------------------------------------------------------------------------------------------");
 
 	}
 
@@ -222,6 +229,33 @@ public class PrincipalTcc {
 		word = word.replaceAll("an", "");
 
 		return word;
+	}
+
+	public static Float bublueSort(float a, float b, float c, float d) {
+		Float[] vet = { a, b, c, d };
+		Float aux = null;
+		int i = 0;
+
+	//	System.out.println("Vetor desordenado: ");
+		for (i = 0; i < 4; i++) {
+		//	System.out.println(" " + vet[i]);
+		}
+		//System.out.println(" ");
+
+		for (i = 0; i < 4; i++) {
+			for (int j = 0; j < 3; j++) {
+				if (vet[j] > vet[j + 1]) {
+					aux = vet[j];
+					vet[j] = vet[j + 1];
+					vet[j + 1] = aux;
+				}
+			}
+		}
+	//	System.out.println("Vetor organizado:");
+		for (i = 0; i < 4; i++) {
+		//	System.out.println(" " + vet[i]);
+		}
+		return vet[3];
 	}
 
 }

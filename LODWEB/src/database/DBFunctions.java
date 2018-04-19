@@ -6556,17 +6556,17 @@ public class DBFunctions {
 		return list;
 	}
 
-	public void insertOrUpdateSimilarity(int user_id, int movie_id_1, int movie_id_2, float similarity) {
+	public void insertOrUpdateSimilarity(int user_id, String titulo, int movie_id_2, float similarity) {
 		Connection conn = DBConnection.getConnection();
 		PreparedStatement ps = null;
 		try {
 			try {
 				// for (Evaluation evaluation : evaluations) {
-				String query = "REPLACE INTO `tcclaique`.`similarity` (`user_id`,`movie_id_1`,`movie_id_2`,`similarity`) VALUES (?,?,?,?)";
+				String query = "REPLACE INTO `tcclaique`.`similarity` (`user_id`,`titulo`,`movie_id_2`,`similarity`) VALUES (?,?,?,?)";
 				// System.out.println(query);
 				ps = conn.prepareStatement(query);
 				ps.setInt(1, user_id);
-				ps.setInt(2, movie_id_1);
+				ps.setString(2, titulo);
 				ps.setInt(3, movie_id_2);
 				ps.setFloat(4, similarity);
 
